@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "idb": "./idb.js",
-    "lit-html": "./lit-html.js",
-    "lit-icon": "./lit-icon.js",
-    "page": "./page.js"
-  }
-}
