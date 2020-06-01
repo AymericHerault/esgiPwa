@@ -37,22 +37,13 @@ export default class Home {
           <p class="mt-4 text-center text-xl">No todos yet, try to create a new one</p>
         </div>
         <footer class="h-16 bg-gray-300 fixed bottom-0 inset-x-0">
-          <form @submit="${this.handleForm}" id="addTodo" class="w-full h-full flex justify-between items-center px-4 py-3">
-            <label class="flex-1" aria-label="Add todo input">
-              <input
-                autocomplete="off"
-                .value="${this.properties.todo}"
-                @input="${e => this.properties.todo = e.target.value}"
-                class="py-3 px-4 rounded-sm w-full h-full"
-                type="text"
-                placeholder="Enter a new todo ..."
-                name="todo">
-            </label>
-            <button
+        <a href="/add-todo">
+           <button
               aria-label="Add"
-              class="ml-4 rounded-lg text-uppercase bg-heraku h-full text-center px-3 uppercase text-white font-bold flex justify-center items-center"
-              type="submit">Add<lit-icon class="ml-2" icon="send"></lit-icon></button>
-          </form>  
+              class="w-full rounded-lg text-uppercase bg-heraku h-full text-center px-3 uppercase text-white font-bold flex justify-center items-center"
+              type="submit">Add Todo<lit-icon class="ml-2" icon="send"></lit-icon>
+            </button>
+        </a>
         </footer>
       </section>
     `;
@@ -61,9 +52,5 @@ export default class Home {
   renderView() {
     const view = this.template();
     render(view, this.page);
-  }
-
-  handleForm(e) {
-    e.preventDefault();
   }
 }

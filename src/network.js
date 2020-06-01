@@ -72,4 +72,4 @@ function reset() {
     arrTimes = [];
     counter = 0;
     abortFallback = false;
-}
+} 

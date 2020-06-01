@@ -21,21 +21,20 @@ export default class AddTodo {
     template() {
         return html`
       <section class="h-full">
-        <form @submit="${this.handleForm.bind(this)}" class="w-full p-10">
+      <form @submit="${this.handleForm.bind(this)}" class="w-full p-10">
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
               <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                Titre todo
+                Titre
               </label>
             </div>
             <div class="md:w-2/3">
-              <input 
-                  @input="${e => this.properties.todo.title = e.target.value}"
-                  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
-                  id="title" 
-                  type="text" 
-                  placeholder="Ma todolist">
-            </div>
+            <input 
+            @input="${e => this.properties.todo.title = e.target.value}"
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+            id="title" 
+            type="text" 
+            placeholder="Ma todolist">            </div>
           </div>
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
@@ -44,13 +43,12 @@ export default class AddTodo {
               </label>
             </div>
             <div class="md:w-2/3">
-              <textarea 
-                @input="${e => this.properties.todo.description = e.target.value}"    
-                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                id="description"
-                >    
-              </textarea>
-            </div>
+            <textarea 
+            @input="${e => this.properties.todo.description = e.target.value}"    
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            id="description"
+            >    
+          </textarea>            </div>
           </div>
           <div class="md:flex md:items-center">
             <div class="md:w-1/3"></div>

@@ -1,6 +1,17 @@
 import page from 'page';
-import {fetchTodos} from './api/todos.js';
-import {setTodos, getTodos} from './idb.js';
+import checkConnectivity from './network.js';
+import {createTodo, fetchTodos} from './api/todos.js';
+import {getTodos, setTodo, setTodos} from './idb.js';
+import {createTodoEvent} from './utils/createTodoEvent';
+import displayCurrentPage from "./utils/displayCurrentPage";
+
+checkConnectivity({});
+document.addEventListener('connection-changed', e => {
+    document.offline = !e.detail;
+    if (!document.offline) {
+        // Sync data ...
+    }
+});
 
 const app = document.querySelector('#app');
 fetch('./config.json')
@@ -30,11 +41,19 @@ fetch('./config.json')
 
             const ctn = app.querySelector('[page="home"]');
             const HomeView = new Home(ctn);
+            displayCurrentPage('home');
+        });
 
-            ctn.setAttribute('active', true);
+        page('/add-todo', async (ctx) => {
+            const module = await import('./views/AddTodo.js');
+            const AddTodo = module.default;
+            const home = app.querySelector('[page="home"]');
+            const ctn = app.querySelector('[page="addTodo"]');
+            const addTodoView = new AddTodo(ctn);
+            displayCurrentPage('addTodo');
+            createTodoEvent();
         });
 
         // Start router
         page();
-
     }); 
