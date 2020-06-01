@@ -1,26 +1,35 @@
 import page from 'page';
 import checkConnectivity from './network.js';
-import {createTodo, fetchTodos} from './api/todos.js';
-import {getTodos, setTodo, setTodos} from './idb.js';
-import {createTodoEvent} from './utils/createTodoEvent';
+import {createTodo, fetchTodos, fetchTodo} from './api/todos.js';
+import {getTodos, setTodo, setTodos, getTodo, unsetTodo} from './idb.js';
+import {createTodoEvent, updateTodoEvent, deleteTodoEvent} from './utils/todoEvent';
 import displayCurrentPage from "./utils/displayCurrentPage";
 
 checkConnectivity({});
-document.addEventListener('connection-changed', e => {
+document.addEventListener("connection-changed", e => {
     document.offline = !e.detail;
     if (!document.offline) {
-        // Sync data ...
+        getTodos().then(value => {
+            values.forEach(value => {
+                if (value.synced === "false"){
+                    createTodo(value).then(() => console.log("Added Todo to db"));
+                    unsetTodo(value.id).then(() => console.log("Todo remove"));
+                    value.synced = "true";
+                    setTodo(value).then(() => console.log("Idb updated"));
+                }
+            })
+        });
     }
 });
 
 const app = document.querySelector('#app');
-fetch('./config.json')
+fetch('/config.json')
     .then(result => result.json())
     .then(async (config) => {
         window.config = config;
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = './assets/styles/tailwind.css';
+        link.href = '/assets/styles/tailwind.css';
         document.head.appendChild(link);
 
         page('/', async (ctx) => {
@@ -37,22 +46,40 @@ fetch('./config.json')
             } else {
                 todos = await getTodos();
             }
-
-
             const ctn = app.querySelector('[page="home"]');
             const HomeView = new Home(ctn);
+            HomeView.todos = todos;
             displayCurrentPage('home');
+            return HomeView.renderView();
         });
 
         page('/add-todo', async (ctx) => {
             const module = await import('./views/AddTodo.js');
             const AddTodo = module.default;
-            const home = app.querySelector('[page="home"]');
             const ctn = app.querySelector('[page="addTodo"]');
-            const addTodoView = new AddTodo(ctn);
+            new AddTodo(ctn);
             displayCurrentPage('addTodo');
             createTodoEvent();
         });
+
+        page('/todos/:id', async (ctx) => {
+            let todo = {};
+            if (navigator.onLine) {
+                todo = await fetchTodo(ctx.params.id);
+            } else {
+                todo = await getTodo(ctx.params.id);
+            }
+            const module = await import('./views/DetailTodo.js');
+            const DetailTodo = module.default;
+            const ctn = app.querySelector('[page="detail"]');
+            const DetailTodoView = new DetailTodo(ctn);
+            DetailTodoView.todo = todo;
+            displayCurrentPage('detail');
+            updateTodoEvent();
+            deleteTodoEvent();
+            return DetailTodoView.renderView();
+        });
+
 
         // Start router
         page();

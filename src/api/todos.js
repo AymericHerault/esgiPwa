@@ -13,10 +13,10 @@ export async function fetchTodos() {
         });
   }
   
-export function fetchTodo() {
+export function fetchTodo(id) {
   const config = window.config;
   
-  return fetch(`${config.api}/todos`, {
+  return fetch(`${config.api}/todos/${id}`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json'
@@ -28,6 +28,23 @@ export function fetchTodo() {
       return false;
     })
 }
+
+export function updateTodo(todo) {
+  const config = window.config;
+
+  return fetch(`${config.api}/todos/${todo.id}`, {
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+  })
+      .then(result => result.json())
+      .catch(error => {
+          console.error(error);
+          return false;
+      })
+}
+
 
 export function createTodo(data) {
 const config = window.config;
@@ -46,16 +63,19 @@ return fetch(`${config.api}/todos`, {
 }
 
 export async function deleteTodo(id) {
-const config = window.config;
-return fetch(`${config.api}/todos/${id}`, {
-  method: 'DELETE',
-  headers: {
-    'Content-Type': 'application/json',
-  }
-    })
-    .then((result) => {result.json(); window.location.reload(true)})
-    .catch(error => {
-      console.error(error);
-      return false;
-    });
+  const config = window.config;
+  return fetch(`${config.api}/todos/${id}`, {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json',
+      }
+  })
+      .then((result) => {
+          result.json();
+          window.location.reload(true)
+      })
+      .catch(error => {
+          console.error(error);
+          return false;
+      });
   } 

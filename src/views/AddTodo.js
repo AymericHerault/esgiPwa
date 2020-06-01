@@ -34,7 +34,8 @@ export default class AddTodo {
             class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
             id="title" 
             type="text" 
-            placeholder="Ma todolist">            </div>
+            placeholder="Ma todolist">            
+            </div>
           </div>
           <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
@@ -48,7 +49,8 @@ export default class AddTodo {
             class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             id="description"
             >    
-          </textarea>            </div>
+          </textarea>            
+          </div>
           </div>
           <div class="md:flex md:items-center">
             <div class="md:w-1/3"></div>

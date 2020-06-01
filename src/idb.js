@@ -36,9 +36,18 @@ export async function setTodo(data) {
   return await db.getAllFromIndex('todos', 'deleted', 'false');
 }
 
-
 export async function unsetTodo(id) {
   const db = await initDB();
   await db.delete('todos', id);
   return await db.getAllFromIndex('todos', 'deleted', 'false');
 } 
+
+export async function getTodos() {
+  const db = await initDB();
+  return await db.getAllFromIndex('todos', 'deleted', 'false');
+}
+
+export async function getTodo(id) {
+  const db = await initDB();
+  return await db.getFromIndex('todos', 'id', Number(id));
+}
